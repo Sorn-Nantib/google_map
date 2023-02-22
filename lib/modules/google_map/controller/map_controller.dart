@@ -20,10 +20,7 @@ class AddressController extends GetxController {
     
   }
 
-  Future<void>convertAddress()async{
-      isLoading(true);
 
-  }
 
   convertToAddress(double lat, double long, String apikey) async {
       Dio dio = Dio();  //initilize dio package
