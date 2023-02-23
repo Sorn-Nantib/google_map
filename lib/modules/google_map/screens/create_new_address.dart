@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_map/components/custom_button.dart';
 import 'package:google_map/modules/google_map/controller/map_controller.dart';
+import 'package:google_map/modules/google_map/screens/custom_google_map/maps.dart';
 import 'package:google_map/modules/google_map/screens/google_map_screen.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../components/custom_textfield.dart';
 import 'custom_google_map/custom_google_map.dart';
@@ -17,6 +21,59 @@ class CreateNewAddressScreen extends StatefulWidget {
 final addressController = Get.put(AddressController());
 
 class _CreateNewAddressScreenState extends State<CreateNewAddressScreen> {
+  
+
+  // Future<void> getAddressFromLatLng(LatLng position) async {
+  //   try {
+  //     await placemarkFromCoordinates(position.latitude, position.longitude)
+  //         .then((List<Placemark> placemarks) {
+  //       Placemark place = placemarks[0];
+  //       setState(() {
+  //         stAddress =
+  //             '${place.street}, ${place.administrativeArea},${place.name}, ${place.country}'
+  //                 .toString();
+  //       });
+  //       debugPrint("Full Address:$stAddress");
+  //     });
+  //   } catch (e) {
+  //     debugPrint("Error :$e");
+  //   } finally {
+  //     debugPrint("Error final  :");
+  //   }
+  // }
+
+ 
+
+
+
+  // getAddressFromLatLngs() async {
+  //   try {
+  //     List<Placemark> placemarks =
+  //         await placemarkFromCoordinates(11.55072, 104.8969216
+  //             // _currentPosition!.latitude,
+  //             // _currentPosition!.longitude
+  //             );
+
+  //     Placemark place = placemarks[0];
+
+  //     setState(() {
+  //       _currentAddress =
+  //           "${place.locality}, ${place.postalCode}, ${place.country}";
+  //     });
+  //     debugPrint('nanatib :  ${ _currentAddress}');
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+@override
+  void initState() {
+  
+     addressController.getAddressFromLatLng(addressController.latitudePosition.value,addressController.longitudePosition.value);
+    super.initState();
+  }
+  String? _currentAddress;
+  String? stAddress = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +129,8 @@ class _CreateNewAddressScreenState extends State<CreateNewAddressScreen> {
                     textEditingController:
                         addressController.locationDetailController.value,
                     readOnly: true,
-                    hintText: 'Location Detail',
+                    hintText: addressController.address.value,
+                    labelText:'Location',
                     obscureText: false,
                   ),
                   const SizedBox(height: 25),
@@ -87,7 +145,13 @@ class _CreateNewAddressScreenState extends State<CreateNewAddressScreen> {
                       children:
                           List.generate(3, (index) => const CircleAvatar())),
                   const Spacer(),
-                  CustomButton(onPressed: () {}, buttonName: 'Save Address'),
+                  CustomButton(
+                      onPressed: () {
+                       
+                       //addressController.getAddressFromLatLng(addressController.latitudePosition .value,addressController.longitudePosition.value);
+                        debugPrint('Hello kon haha ');
+                      },
+                      buttonName: 'Save Address'),
                 ],
               ),
             ),
